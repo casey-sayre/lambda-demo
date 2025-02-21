@@ -1,0 +1,20 @@
+{
+  "app": "python3 app.py",
+  "context": {},
+  "watch": {
+    "include": [
+      "**",
+      "lambda_function/**"
+    ],
+    "exclude": [
+      "*.d.ts",
+      "*.jsii.json",
+      "node_modules",
+      "bower_components",
+      ".git/**",
+      "cdk.out",
+      ".cdk-cache",
+      "__pycache__"
+    ]
+  }
+}
