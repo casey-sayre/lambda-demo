@@ -9,6 +9,8 @@ code .
 Answer yes to "reopen in container?".  All
 devtools will be installed in the resulting devcontainer.
 
+Note that the devcontainer mounts the WSL ~/.ssh and ~/.aws readonly so AWS and ssh (think github) credentials are available in vscode.
+
 ## Uses poetry-plugin-export to get requirements.txt for the various lambdas
 
 [https://github.com/python-poetry/poetry-plugin-export]
