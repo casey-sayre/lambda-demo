@@ -15,11 +15,24 @@ devtools will be installed in the resulting devcontainer.
 
 Note that the devcontainer mounts the WSL ~/.ssh and ~/.aws readonly so AWS and ssh (think github) credentials are available in vscode.
 
+When starting out it's probably advisable to run the following from the vscode devcontainer terminal (bash):
+
+`python -m venv .venv`
+
+`source .venv/bin/activate`
+
+`poetry update`
+
+`poetry install`
+
 ## Uses poetry-plugin-export to get requirements.txt for the various lambdas
 
 [https://github.com/python-poetry/poetry-plugin-export]
 ```
 sudo poetry self add poetry-plugin-export
 ```
+A lambda function's dependencies must be maintained in the corresponding groups in `pyproject.toml`
 
-When it's time to deploy, to prepare, from bash, run `./generate_lambda_runtime_deps.sh`
+When it's time to deploy, to prepare, from vscode devcontainer terminal (bash), run
+
+`./generate_lambda_runtime_deps.sh`
