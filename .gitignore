@@ -1,5 +1,4 @@
 cdk.out
-.devcontainer
 *.pyc
 cdk.context.json
 requirements.txt
