@@ -1,30 +1,37 @@
-import json
 from fastapi import FastAPI
 from mangum import Mangum
+from src.lambda_demo.utils.logger import setup_json_logger
+
+logger = setup_json_logger(__name__)
+
+
+logger.info(f"begin {__name__}")
 
 app = FastAPI()
 
 
 @app.get("/")
 async def get_orders():
-    return {"message": "Hello from orders FastAPI (GET)"}
+    return {"message": "Hello from GET orders/"}
 
 
 @app.post("/")
 async def create_order():
-    return {"message": "Hello from orders FastAPI (POST)"}
+    return {"message": "Hello from POST orders/"}
 
 
 @app.get("/{order_id}")
 async def get_order_by_id(order_id: int):
-    return {"message": f"Hello from orders FastAPI (GET by ID: {order_id})"}
+    return {"message": f"Hello from GET orders/{order_id}"}
 
-
-# ... other FastAPI routes as needed
 
 handler = Mangum(app)  # Important: Create Mangum handler
 
 
 # Important: This is the handler function that API Gateway will call
 def lambda_handler(event, context):
+    logger.info(f"{event=}; {context=}")
     return handler(event, context)
+
+
+logger.info("end")
