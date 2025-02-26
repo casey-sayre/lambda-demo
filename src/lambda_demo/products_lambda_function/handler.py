@@ -25,10 +25,9 @@ async def get_product_by_id(product_id: int):
     return {"message": f"Hello from GET products/{product_id}"}
 
 
-handler = Mangum(app)  # Important: Create Mangum handler
+handler = Mangum(app)
 
 
-# Important: This is the handler function that API Gateway will call
 def lambda_handler(event, context):  # pragma: no cover
     logger.info(f"{event=}; {context=}")
     return handler(event, context)
