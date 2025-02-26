@@ -29,7 +29,7 @@ handler = Mangum(app)  # Important: Create Mangum handler
 
 
 # Important: This is the handler function that API Gateway will call
-def lambda_handler(event, context):
+def lambda_handler(event, context):  # pragma: no cover
     logger.info(f"{event=}; {context=}")
     return handler(event, context)
 

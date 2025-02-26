@@ -2,3 +2,4 @@ cdk.out
 *.pyc
 cdk.context.json
 requirements.txt
+.coverage
