@@ -4,6 +4,7 @@ from aws_cdk import (
 )
 from constructs import Construct
 from aws_cdk.aws_lambda import IFunction
+from aws_cdk.aws_cognito import UserPool
 
 
 class LambdaSpec:
@@ -15,7 +16,14 @@ class LambdaSpec:
 class ApiGatewayStack(Stack):
 
     def __init__(
-        self, scope: Construct, construct_id: str, *, lambda_specs: list[LambdaSpec], stage_name: str, **kwargs
+        self,
+        scope: Construct,
+        construct_id: str,
+        *,
+        lambda_specs: list[LambdaSpec],
+        stage_name: str,
+        user_pool: UserPool,
+        **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -35,24 +43,34 @@ class ApiGatewayStack(Stack):
         # Output API endpoint
         deployment_id = "LambdaDemoDeployment"
         deployment = apigateway.CfnDeployment(self, deployment_id, rest_api_id=self.lambda_rest_api.rest_api_id)
+        authorizer = apigateway.CognitoUserPoolsAuthorizer(
+            self,
+            "CognitoAuthorizer",
+            cognito_user_pools=[user_pool],
+            identity_source=apigateway.IdentitySource.header("Authorization"),
+        )
 
         # integrate the lambdas
         for spec in lambda_specs:
             integration = apigateway.LambdaIntegration(spec.fn, proxy=True)
 
-            top_resource = self.lambda_rest_api.root.add_resource(spec.key)
-            top_resource.add_method("ANY", integration, authorization_type=apigateway.AuthorizationType.NONE)
-            deployment.add_dependency(top_resource.node.default_child)
+            resource = self.lambda_rest_api.root.add_resource(spec.key)  # /widgets
+            resource_id = resource.add_resource("{id}")  # /widgets/{id}
 
-            id_resource = top_resource.add_resource("{id}")
-            id_resource.add_method("ANY", integration, authorization_type=apigateway.AuthorizationType.NONE)
-            deployment.add_dependency(id_resource.node.default_child)
+            resource.add_method("GET", integration, authorizer=authorizer)
+            deployment.add_dependency(resource.node.default_child)
+
+            resource.add_method("POST", integration, authorizer=authorizer)
+            deployment.add_dependency(resource.node.default_child)
+
+            resource_id.add_method("GET", integration, authorizer=authorizer)
+            deployment.add_dependency(resource_id.node.default_child)
 
         apigateway.CfnStage(
             self,
             "LambdaDemoStage",
             rest_api_id=self.lambda_rest_api.rest_api_id,
-            deployment_id=deployment.ref,  # self.node.find_child(deployment_id).node.id,
+            deployment_id=deployment.ref,
             stage_name=stage_name,
         )
 

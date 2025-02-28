@@ -13,10 +13,9 @@ class CognitoStack(Stack):
         # Create the User Pool
         self.user_pool = cognito.UserPool(
             self,
-            "MyUserPool",
-            user_pool_name="MyFastAPIUserPool",
-            # ... other User Pool configurations
+            "LambdaDemoUserPool",
+            user_pool_name="LambdaDemoFastAPIUserPoolName",
         )
 
         # Create a User Pool Client
-        self.user_pool_client = self.user_pool.add_client("MyUserPoolClient")
+        self.user_pool_client = self.user_pool.add_client("LambdaDemoUserPoolClient")

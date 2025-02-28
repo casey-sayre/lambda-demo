@@ -11,7 +11,7 @@ logger = setup_json_logger(__name__)
 logger.info("begin cdk app")
 app = App()
 
-user_pool_stack = CognitoStack(app, "CognitoStack")
+cognito_stack = CognitoStack(app, "CognitoStack")
 
 customers_lambda_key = "customers"
 customers_lambda_stack = LambdaStack(app, lambda_key=customers_lambda_key)
@@ -34,6 +34,7 @@ api_gateway_stack = ApiGatewayStack(
       products_lambda_spec
     ],
     stage_name="dev",
+    user_pool=cognito_stack.user_pool,
 )
 
 app.synth()
