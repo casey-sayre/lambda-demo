@@ -16,12 +16,22 @@ class LambdaStack(Stack):
     def __init__(self, scope: Construct, *, lambda_key: str, **kwargs) -> None:
         super().__init__(scope, lambda_key.title() + "LambdaStack", **kwargs)
 
-        lambda_id = f"{lambda_key.title()}LambdaFunction"
+        logger.info(f"module name {type(self).__name__}; {PROJECT_SRC=}")
+
+        lambda_id = f"{lambda_key.title()}LambdaFunction1"
 
         # Define the Lambda function
         lambda_dir = f"src/lambda_demo/{lambda_key}_lambda_function"
-        utils_dir = f"src/lambda_demo/utils"
+        utils_dir = "src/lambda_demo/utils"
         asset_output_path = "/asset-output"
+        bundle_cmd = (
+            f"mkdir -p {asset_output_path}/{lambda_dir} && "
+            f"mkdir -p {asset_output_path}/{utils_dir} && "
+            f"pip install --no-cache -r {lambda_dir}/requirements.txt -t {asset_output_path} && "
+            f"cp -au {lambda_dir}/*.py {asset_output_path}/{lambda_dir}/ && "
+            f"cp -au {utils_dir}/*.py {asset_output_path}/{utils_dir}/"
+        )
+        logger.info(f"{lambda_id=}; {bundle_cmd=}")
         self.function = _lambda.Function(
             self,
             lambda_id,
@@ -33,13 +43,7 @@ class LambdaStack(Stack):
                     command=[
                         "bash",
                         "-c",
-                        (
-                            f"mkdir -p {asset_output_path}/{lambda_dir} && "
-                            f"mkdir -p {asset_output_path}/{utils_dir} && "
-                            f"pip install --no-cache -r {lambda_dir}/requirements.txt -t {asset_output_path} && "
-                            f"cp -au {lambda_dir}/*.py {asset_output_path}/{lambda_dir}/ && "
-                            f"cp -au {utils_dir}/*.py {asset_output_path}/{utils_dir}/"
-                        ),
+                        bundle_cmd
                     ],
                     image=_lambda.Runtime.PYTHON_3_13.bundling_image,
                 ),

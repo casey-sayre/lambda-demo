@@ -4,23 +4,20 @@ from src.lambda_demo.utils.logger import setup_json_logger
 
 logger = setup_json_logger(__name__)
 
-
-logger.info(f"begin {__name__}")
-
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/orders")
 async def get_orders():
     return {"message": "Hello from GET orders/"}
 
 
-@app.post("/")
+@app.post("/orders")
 async def create_order():
     return {"message": "Hello from POST orders/"}
 
 
-@app.get("/{order_id}")
+@app.get("/orders/{order_id}")
 async def get_order_by_id(order_id: int):
     return {"message": f"Hello from GET orders/{order_id}"}
 

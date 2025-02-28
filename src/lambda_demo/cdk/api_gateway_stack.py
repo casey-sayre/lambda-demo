@@ -39,10 +39,14 @@ class ApiGatewayStack(Stack):
         # integrate the lambdas
         for spec in lambda_specs:
             integration = apigateway.LambdaIntegration(spec.fn, proxy=True)
-            resource = self.lambda_rest_api.root.add_resource(spec.key)
-            resource.add_method("ANY", integration)
-            cfn_resource = resource.node.default_child
-            deployment.add_dependency(cfn_resource)
+
+            top_resource = self.lambda_rest_api.root.add_resource(spec.key)
+            top_resource.add_method("ANY", integration, authorization_type=apigateway.AuthorizationType.NONE)
+            deployment.add_dependency(top_resource.node.default_child)
+
+            id_resource = top_resource.add_resource("{id}")
+            id_resource.add_method("ANY", integration, authorization_type=apigateway.AuthorizationType.NONE)
+            deployment.add_dependency(id_resource.node.default_child)
 
         apigateway.CfnStage(
             self,

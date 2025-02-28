@@ -106,14 +106,14 @@ typeguard = ">=2.13.3,<4.3.0"
 
 [[package]]
 name = "aws-cdk-lib"
-version = "2.181.0"
+version = "2.181.1"
 description = "Version 2 of the AWS Cloud Development Kit library"
 optional = false
 python-versions = "~=3.8"
 groups = ["main"]
 files = [
-    {file = "aws_cdk_lib-2.181.0-py3-none-any.whl", hash = "sha256:717b1c9fab00924b3c6ef1a6febb4d8816b822e07879da2dd0422c3339436219"},
-    {file = "aws_cdk_lib-2.181.0.tar.gz", hash = "sha256:f532acd18ba209727fdde7c6f12bc1e3265b59dd0d24de8b6efb743e541504a2"},
+    {file = "aws_cdk_lib-2.181.1-py3-none-any.whl", hash = "sha256:c4246dc6689dd46b0f666b98ce3049ab2b1faf390c50eeb9c6ba0a83cd53970e"},
+    {file = "aws_cdk_lib-2.181.1.tar.gz", hash = "sha256:59356371569797f57bc2832d97dc70802d479244822e84e509739b1d41b2b4c5"},
 ]
 
 [package.dependencies]
@@ -270,14 +270,14 @@ toml = ["tomli ; python_full_version <= \"3.11.0a6\""]
 
 [[package]]
 name = "fastapi"
-version = "0.115.8"
+version = "0.115.9"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 optional = false
 python-versions = ">=3.8"
 groups = ["customers_lambda_function", "orders_lambda_function", "products_lambda_function"]
 files = [
-    {file = "fastapi-0.115.8-py3-none-any.whl", hash = "sha256:753a96dd7e036b34eeef8babdfcfe3f28ff79648f86551eb36bfc1b0bf4a8cbf"},
-    {file = "fastapi-0.115.8.tar.gz", hash = "sha256:0ce9111231720190473e222cdf0f07f7206ad7e53ea02beb1d2dc36e2f0741e9"},
+    {file = "fastapi-0.115.9-py3-none-any.whl", hash = "sha256:4a439d7923e4de796bcc88b64e9754340fcd1574673cbd865ba8a99fe0d28c56"},
+    {file = "fastapi-0.115.9.tar.gz", hash = "sha256:9d7da3b196c5eed049bc769f9475cd55509a112fbe031c0ef2f53768ae68d13f"},
 ]
 
 [package.dependencies]
