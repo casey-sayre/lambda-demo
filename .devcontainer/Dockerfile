@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Poetry (as root)
+# Install Poetry and AWS CLI (as root)
 ENV POETRY_HOME=/etc/poetry
 RUN curl -sSL https://install.python-poetry.org | POETRY_HOME=$POETRY_HOME python - \
     && chmod a+x ${POETRY_HOME}/bin/poetry \
