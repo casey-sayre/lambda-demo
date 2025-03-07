@@ -34,7 +34,6 @@ VIEWER_USER = {
     "USERNAME": "viewer",
     "GROUP_NAMES": VIEWER_GROUP_NAMES,
 }
-# input required END
 
 cognito_client = boto3.client("cognito-idp", region_name=region)
 
