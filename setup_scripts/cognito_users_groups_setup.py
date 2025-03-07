@@ -22,8 +22,6 @@ ADMIN_GROUP_NAMES = [
     "products_admins",
 ]
 
-# input required BEGIN
-
 ADMIN_USER = {
     "PASSWORD": admin_password,
     "EMAIL": admin_email,
