@@ -21,19 +21,27 @@ poetry-plugin-export = ">=1.8"
 [tool.poetry.group.customers_lambda_function.dependencies]
 fastapi = ">=0.115.8,<0.116.0"
 mangum = ">=0.19.0,<0.20.0"
+pydantic = "^2.10.6"
 
 [tool.poetry.group.products_lambda_function.dependencies]
 fastapi = ">=0.115.8,<0.116.0"
 mangum = ">=0.19.0,<0.20.0"
+pydantic = "^2.10.6"
 
 [tool.poetry.group.orders_lambda_function.dependencies]
 fastapi = ">=0.115.8,<0.116.0"
 mangum = ">=0.19.0,<0.20.0"
+pydantic = "^2.10.6"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.4"
 httpx = "^0.28.1"
 pytest-cov = "^6.0.0"
+
+
+[tool.poetry.group.cognito_setup.dependencies]
+boto3 = "^1.37.4"
+dotenv = "^0.9.9"
 
 [tool.pytest.ini_options]
 testpaths = [

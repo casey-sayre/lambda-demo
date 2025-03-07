@@ -1,0 +1,21 @@
+# to use curl to get an auth token for testing, add ALLOW_USER_PASSWORD_AUTH flow to the cognito app client
+
+CLIENT_ID=3xx4xxx77kvju2inubloltb39m
+USERNAME=viewer
+PASSWORD='f00$W1111'
+CLIENT_SECRET=5x57630xxx9qhs1v5fov4o23i45aa557193ln8fgbgbvhaddgke
+SECRET_HASH=$(echo -n "$USERNAME$CLIENT_ID" | openssl dgst -sha256 -hmac "$CLIENT_SECRET" -binary | base64)
+
+aws cognito-idp initiate-auth \
+    --client-id $CLIENT_ID \
+    --auth-flow USER_PASSWORD_AUTH \
+    --auth-parameters USERNAME=$USERNAME,PASSWORD=$PASSWORD,SECRET_HASH=$SECRET_HASH
+
+
+ID_TOKEN=xxxxxxxxxxxxxxxSjEyWStwVDVHVWxuRnNRZW8wM2NpSE4ySzhRSFpPcERKcjVWWmpvPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIwNGQ4YjRhOC1mMGMxLTcwNjUtMTUxZS04ZGRlNjQzYWEzMDMiLCJjb2duaXRvOmdyb3VwcyI6WyJjdXN0b21lcnNfdmlld2VycyIsIm9yZGVyc192aWV3ZXJzIiwicHJvZHVjdHNfdmlld2VycyJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV9MYWRGMzhPb2MiLCJjb2duaXRvOnVzZXJuYW1lIjoidmlld2VyIiwib3JpZ2luX2p0aSI6IjVhMjRjNWQxLTFhMjUtNDcwYi05ZjllLTJkNDk1MzE4YzEwMSIsImF1ZCI6IjRtczlmYXY3N2t2anUyaW51YmxvbHRiMzltIiwiZXZlbnRfaWQiOiI4NTQ1ODdmZi0zZTc1LTQwNzktOWQ3Mi1hYTQyMjJmYzRmYjQiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTc0MTM1MDkzMiwiZXhwIjoxNzQxMzU0NTMyLCJpYXQiOjE3NDEzNTA5MzIsImp0aSI6ImZlNWEyNTIwLTk0NmMtNDcyOS05NDRiLTIwMzJmNzEyYjhkNyIsImVtYWlsIjoiY2FzZXkuc2F5cmUrdmlld2VybEBnbWFpbC5jb20ifQ.TyzKE_k9TbW7nMpMNDGnhW3DP1U9ShxBPonVmdTC4__9gKizW-uwoc-QOQM_f6AMn5NzqLO1HUGaLohkS1Foe0io4Wtu38QHZa7eB5rqXYTcPCiQUVHYWbM6OsBPFGNlKypZ9JhLiy6sjXr-q8sW7GkhqWNXx3m7J_fPlQsqj6sF6Q_V7vODduMoGNMGWPwn58yHZT9unecw9B9aZ9dUmffmTAcxh2ciHnyOCtT1O7x9Eb2sFzasRsA0wyek32tRJt9kfHzcdVAuQ4sAz-UKKSteXVA-kuCEAq7rL8tZoRL1ElKlEzQ2fuF3r10X6DNNpd6KRDGQjdYku7NiU26YCw
+
+# API GATEWAY
+DEFAULT_ENDPOINT=https://xxx999yz21.execute-api.us-east-1.amazonaws.com/prod
+
+curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $ID_TOKEN" $DEFAULT_ENDPOINT/customers
+    

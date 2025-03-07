@@ -11,6 +11,8 @@ logger = setup_json_logger(__name__)
 logger.info("begin cdk app")
 app = App()
 
+callback_url = "http://localhost:3000/api/auth/callback/cognito"
+logout_callback_url = "http://localhost:3000/api/auth/callback/cognito"
 cognito_stack = CognitoStack(app, "CognitoStack")
 
 customers_lambda_key = "customers"

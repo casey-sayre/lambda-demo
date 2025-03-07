@@ -2,6 +2,7 @@ from pathlib import Path
 from aws_cdk import (
     Stack,
     aws_lambda as _lambda,
+    aws_iam as _iam,
     BundlingOptions,
 )
 from constructs import Construct
@@ -40,12 +41,11 @@ class LambdaStack(Stack):
             code=_lambda.Code.from_asset(
                 ".",
                 bundling=BundlingOptions(
-                    command=[
-                        "bash",
-                        "-c",
-                        bundle_cmd
-                    ],
+                    command=["bash", "-c", bundle_cmd],
                     image=_lambda.Runtime.PYTHON_3_13.bundling_image,
                 ),
             ),
         )
+
+        # allow api gateway to invoke
+        self.function.grant_invoke(_iam.ServicePrincipal("apigateway.amazonaws.com"))
