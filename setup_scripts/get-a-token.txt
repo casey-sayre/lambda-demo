@@ -1,4 +1,4 @@
-# to use curl to get an auth token for testing, add ALLOW_USER_PASSWORD_AUTH flow to the cognito app client
+# to use curl to get an id token for testing, add ALLOW_USER_PASSWORD_AUTH flow to the cognito app client
 
 CLIENT_ID=3xx4xxx77kvju2inubloltb39m
 USERNAME=viewer
