@@ -63,8 +63,8 @@ The script creates user named `admin` and a user named `viewer`.
 
 Groups are created named 
 
-    `customers_viewers`, `customers_viewers`, `customers_viewers`,
-    `customers_admins`, `customers_admins`, `customers_admins`
+    `customers_viewers`, `products_viewers`, `orders_viewers`,
+    `customers_admins`, `products_admins`, `orders_admins`
 
 and the users are added to the groups appropriately.
 
