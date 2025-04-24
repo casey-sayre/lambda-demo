@@ -6,12 +6,13 @@ The objective is to provide a working AWS CDK IaC application.
 
 The CDK infrastructure code is written in Python 3.13.
 The Python dependency management is handled by Poetry 2.1.
+Aside from Cognito authentication, very little thought was put into business logic.
 
 There are unit tests in place.  And there is an integration test that verifies that the deployment is at least somewhat successful.
 
 The infrastructure deployed is a little AWS ecosystem with Lambdas, a Cognito user pool, and an API Gateway.
 
-The Lambdas are coded in Python. Their distinct runtime dependenices are managed by Poetry. See below.
+The Lambdas are coded in Python. The Lambdas use Cognito roles based authorization. Their distinct runtime dependenices are managed by Poetry. See below.
 
 ### Implementation Overview
 
