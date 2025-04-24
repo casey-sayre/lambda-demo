@@ -2,8 +2,16 @@
 
 ## Overview
 
-Deploys a little AWS ecosystem with Lambdas, a Cognito user pool, and an API Gateway.
-This makes a very simple microservices architecture on AWS.
+The objective is to provide a working AWS CDK IaC application.
+
+The CDK infrastructure code is written in Python 3.13.
+The Python dependency management is handled by Poetry 2.1.
+
+There are unit tests in place.  And there is an integration test that verifies that the deployment is at least somewhat successful.
+
+The infrastructure deployed is a little AWS ecosystem with Lambdas, a Cognito user pool, and an API Gateway.
+
+The Lambdas are coded in Python. Their distinct runtime dependenices are managed by Poetry. See below.
 
 ### Implementation Overview
 
@@ -78,7 +86,7 @@ from directory /setup_scripts/, run
 
 ### "One Time" Creation of Users and Groups in the Userpool
 
-CDK deploy does not reinitialize Cognito user pool users and groups.
+CDK deploy does not reinitialize previously created Cognito user pool users and groups.
 
 CDK destroy does not destroy Cognito user pool users and groups.
 
