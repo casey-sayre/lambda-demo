@@ -1,46 +1,35 @@
 import boto3
 import os
+import json
 from dotenv import load_dotenv
 
-# edit .env and fill in the values
+# NB: make sure .env is up to date
+
 load_dotenv()
-admin_password = os.getenv("ADMIN_PASSWORD")
-admin_email = os.getenv("ADMIN_EMAIL")
-viewer_password = os.getenv("VIEWER_PASSWORD")
-viewer_email = os.getenv("VIEWER_EMAIL")
+
 region = os.getenv("REGION")
 user_pool_id = os.getenv("USER_POOL_ID")
 
-VIEWER_GROUP_NAMES = [
-    "customers_viewers",
-    "orders_viewers",
-    "products_viewers",
-]
-ADMIN_GROUP_NAMES = [
-    "customers_admins",
-    "orders_admins",
-    "products_admins",
-]
+VIEWER_GROUP_NAMES = json.loads(os.getenv("VIEWER_GROUP_NAMES"))
+ADMIN_GROUP_NAMES = json.loads(os.getenv("ADMIN_GROUP_NAMES"))
 
 ADMIN_USER = {
-    "PASSWORD": admin_password,
-    "EMAIL": admin_email,
-    "USERNAME": "admin",
+    "PASSWORD": os.getenv("ADMIN_PASSWORD"),
+    "EMAIL": os.getenv("ADMIN_EMAIL"),
+    "USERNAME": os.getenv("ADMIN_USERNAME"),
     "GROUP_NAMES": ADMIN_GROUP_NAMES,
 }
 VIEWER_USER = {
-    "PASSWORD": viewer_password,
-    "EMAIL": viewer_email,
-    "USERNAME": "viewer",
+    "PASSWORD": os.getenv("VIEWER_PASSWORD"),
+    "EMAIL": os.getenv("VIEWER_EMAIL"),
+    "USERNAME": os.getenv("VIEWER_USERNAME"),
     "GROUP_NAMES": VIEWER_GROUP_NAMES,
 }
 
 cognito_client = boto3.client("cognito-idp", region_name=region)
 
-GROUP_NAMES = VIEWER_GROUP_NAMES + ADMIN_GROUP_NAMES
-
 # Create Groups
-for group_name in GROUP_NAMES:
+for group_name in VIEWER_GROUP_NAMES + ADMIN_GROUP_NAMES:
     cognito_client.create_group(
         UserPoolId=user_pool_id,
         GroupName=group_name,

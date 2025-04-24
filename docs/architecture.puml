@@ -1,0 +1,38 @@
+@startuml
+
+skinparam component {
+  BackgroundColor<<Lambda>> PaleGreen
+  BorderColor<<Lambda>> DarkGreen
+  BackgroundColor<<APIGateway>> LightBlue
+  BorderColor<<APIGateway>> Blue
+  BackgroundColor<<Cognito>> LightYellow
+  BorderColor<<Cognito>> Orange
+  BackgroundColor<<NextJS>> LightGrey
+  BorderColor<<NextJS>> Grey
+}
+
+rectangle "NextJS Frontend" as NextJSFrontend <<NextJS>>
+
+database "Cognito User Pool" as CognitoUserPool <<Cognito>>
+
+rectangle "API Gateway" as APIGateway <<APIGateway>> {
+  rectangle "/customers" as CustomersEndpoint
+  rectangle "/orders" as OrdersEndpoint
+  rectangle "/products" as ProductsEndpoint
+}
+
+rectangle "Lambda Customers" as CustomersLambda <<Lambda>>
+rectangle "Lambda Orders" as OrdersLambda <<Lambda>>
+rectangle "Lambda Products" as ProductsLambda <<Lambda>>
+
+NextJSFrontend -- APIGateway : API Requests
+APIGateway -- CustomersLambda : /customers
+APIGateway -- OrdersLambda : /orders
+APIGateway -- ProductsLambda : /products
+
+CustomersLambda -- CognitoUserPool : Authenticate
+OrdersLambda -- CognitoUserPool : Authenticate
+ProductsLambda -- CognitoUserPool : Authenticate
+NextJSFrontend -- CognitoUserPool : Authenticate
+
+@enduml
